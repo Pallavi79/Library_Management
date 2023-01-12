@@ -21,6 +21,7 @@ public class SignUpPage extends javax.swing.JFrame {
         initComponents();
     }
     
+    //SIGNUP DETAILS
     public void insertSignupDetails(){
         String name = txt_username.getText();
         String pwd = txt_password.getText();
@@ -46,6 +47,55 @@ public class SignUpPage extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
+    
+    //VALIDATE SIGNUP DETAILS
+    public boolean validateSignup(){
+        String name = txt_username.getText();
+        String pwd = txt_password.getText();
+        String email = txt_email.getText();
+        String contact = txt_contact.getText();
+        
+        if(name.equals("")){
+            JOptionPane.showMessageDialog( this, "Please enter your username");
+            return false;
+        }
+        if(pwd.equals("")){
+            JOptionPane.showMessageDialog( this, "Please enter your password");
+            return false;
+        }
+        if(email.equals("") || !email.matches("^.+@.+\\..+$")){
+            JOptionPane.showMessageDialog( this, "Please enter a valid email");
+            return false;
+        }
+        if(contact.equals("")){
+            JOptionPane.showMessageDialog( this, "Please enter your contact number");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    //CHECK DUPLICATE USERS
+    
+    public boolean checkDuplicateUser(){
+        String name = txt_username.getText();
+        boolean exists=false;
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "select * from users where name = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1,name);
+            
+            ResultSet rs = pst.executeQuery();
+            if(rs.next()) exists=true;
+            
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return exists;
+    }
+    
     
     
 
@@ -81,9 +131,11 @@ public class SignUpPage extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText(" LIBRARY");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 3, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText(" S.L.N PUBLIC SCHOOL");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons/signup-library-icon.png"))); // NOI18N
@@ -120,9 +172,11 @@ public class SignUpPage extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 2, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("  Signup Page");
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 2, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText(" Create New Account");
 
         txt_password.setBackground(new java.awt.Color(204, 204, 204));
@@ -145,6 +199,11 @@ public class SignUpPage extends javax.swing.JFrame {
         txt_username.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
         txt_username.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         txt_username.setPlaceholder("Enter username");
+        txt_username.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_usernameFocusLost(evt);
+            }
+        });
         txt_username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_usernameActionPerformed(evt);
@@ -295,9 +354,16 @@ public class SignUpPage extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1ActionPerformed
         // TODO add your handling code here:
-        
-        insertSignupDetails();
+        if(validateSignup()){
+            if(checkDuplicateUser()) JOptionPane.showMessageDialog(this, "user already exists");
+            else insertSignupDetails();
+        }
     }//GEN-LAST:event_rSMaterialButtonCircle1ActionPerformed
+
+    private void txt_usernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_usernameFocusLost
+        // TODO add your handling code here:
+        if(checkDuplicateUser()==true) JOptionPane.showMessageDialog(this, "user already exists");
+    }//GEN-LAST:event_txt_usernameFocusLost
 
     /**
      * @param args the command line arguments

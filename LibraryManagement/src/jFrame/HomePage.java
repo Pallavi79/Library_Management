@@ -4,6 +4,8 @@
  */
 package jFrame;
 
+import java.awt.Color;
+
 /**
  *
  * @author HP
@@ -13,6 +15,10 @@ public class HomePage extends javax.swing.JFrame {
     /**
      * Creates new form HomePage
      */
+    
+    Color mouseEnterColor = new Color(255,255,255);
+    Color mouseExitColor = new Color(204,204,204);
+    
     public HomePage() {
         initComponents();
     }
@@ -167,6 +173,12 @@ public class HomePage extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel5MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel5MouseExited(evt);
+            }
         });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -192,6 +204,17 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel6MouseExited(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -690,6 +713,33 @@ public class HomePage extends javax.swing.JFrame {
         books.setVisible(true);
         dispose();
     }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseEntered
+        // TODO add your handling code here:
+        jPanel5.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel5MouseEntered
+
+    private void jPanel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseExited
+        // TODO add your handling code here:
+        jPanel5.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel5MouseExited
+
+    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
+        // TODO add your handling code here:
+        jPanel6.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel6MouseEntered
+
+    private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
+        // TODO add your handling code here:
+        jPanel6.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel6MouseExited
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        // TODO add your handling code here:
+        ManageStudents students = new ManageStudents();
+        students.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel6MouseClicked
 
     /**
      * @param args the command line arguments

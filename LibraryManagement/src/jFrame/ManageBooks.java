@@ -23,10 +23,10 @@ public class ManageBooks extends javax.swing.JFrame {
         setBookDetails();
     }
     
-    String book_name,author;
-    int book_id,quantity;
     DefaultTableModel model;
-    //ADD BOOK DETAILS
+    
+    
+    //SHOW BOOK DETAILS IN THE TABLE
     public void setBookDetails(){
         
         
@@ -50,6 +50,38 @@ public class ManageBooks extends javax.swing.JFrame {
         }catch(Exception e){
             e.printStackTrace();
         }
+        
+    }
+    
+    
+    //ADD BOOK DETAILS
+    String bookName,author;
+    int bookId,quantity;
+    public boolean addBook(){
+        boolean added = false;
+        bookId = Integer.parseInt(txt_bookId.getText());
+        bookName = txt_bookName.getText();
+        author = txt_authorName.getText();
+        quantity = Integer.parseInt(txt_quantity.getText());
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "insert into book_details values(?,?,?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            pst.setInt(1,bookId);
+            pst.setString(2,bookName);
+            pst.setString(3,author);
+            pst.setInt(4,quantity);
+            
+            int rowCount = pst.executeUpdate();
+            if(rowCount>0){
+                added=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return added;
         
     }
     
@@ -406,6 +438,8 @@ public class ManageBooks extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle3ActionPerformed
         // TODO add your handling code here:
+        if(addBook()) JOptionPane.showMessageDialog(this, "Book added successfully");
+        else JOptionPane.showMessageDialog(this,"Book addition failed");
     }//GEN-LAST:event_rSMaterialButtonCircle3ActionPerformed
 
     private void tbl_bookDetailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_bookDetailsMouseClicked

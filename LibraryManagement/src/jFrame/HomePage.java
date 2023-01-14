@@ -163,6 +163,11 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
@@ -552,7 +557,7 @@ public class HomePage extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Student Id", "Name", "Course", "Branch"
+                "Book Id", "Book Name", "Author Name", "Quantity"
             }
         ));
         rSTableMetro1.setColorBackgoundHead(new java.awt.Color(0, 102, 153));
@@ -678,6 +683,13 @@ public class HomePage extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1271, 899));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        ManageBooks books = new ManageBooks();
+        books.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel5MouseClicked
 
     /**
      * @param args the command line arguments

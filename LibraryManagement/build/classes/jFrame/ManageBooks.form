@@ -309,11 +309,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value=" UPDATE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSMaterialButtonCircle1ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="rojerusan.RSMaterialButtonCircle" name="rSMaterialButtonCircle2">
           <Properties>
             <Property name="text" type="java.lang.String" value=" DELETE"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rSMaterialButtonCircle2ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="rojerusan.RSMaterialButtonCircle" name="rSMaterialButtonCircle3">
           <Properties>

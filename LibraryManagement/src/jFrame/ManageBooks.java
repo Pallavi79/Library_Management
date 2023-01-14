@@ -85,6 +85,68 @@ public class ManageBooks extends javax.swing.JFrame {
         
     }
     
+    //CLEAR THE TABLE
+    public void clearTable(){
+        DefaultTableModel model = (DefaultTableModel) tbl_bookDetails.getModel();
+        model.setRowCount(0);
+    }
+    
+    //UPDATE BOOK DETAILS
+    public boolean updateBook(){
+        boolean updated = false;
+        
+        bookId = Integer.parseInt(txt_bookId.getText());
+        bookName = txt_bookName.getText();
+        author = txt_authorName.getText();
+        quantity = Integer.parseInt(txt_quantity.getText());
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "update book_details set book_name = ?,author = ?,quantity = ? where book_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            
+            pst.setString(1,bookName);
+            pst.setString(2,author);
+            pst.setInt(3,quantity);
+            pst.setInt(4,bookId);
+            
+            int rowCount = pst.executeUpdate();
+            if(rowCount>0){
+                updated=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return updated;
+    }
+    
+    
+    //DELETE BOOK
+    public boolean deleteBook(){
+        boolean deleted = false;
+        bookId = Integer.parseInt(txt_bookId.getText());
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "delete from book_details where book_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1,bookId);
+            
+            int rowCount = pst.executeUpdate();
+            if(rowCount>0){
+                deleted=true;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return deleted;
+        
+    }
+    
+    
+    
     
     
     
@@ -226,8 +288,18 @@ public class ManageBooks extends javax.swing.JFrame {
         });
 
         rSMaterialButtonCircle1.setText(" UPDATE");
+        rSMaterialButtonCircle1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSMaterialButtonCircle1ActionPerformed(evt);
+            }
+        });
 
         rSMaterialButtonCircle2.setText(" DELETE");
+        rSMaterialButtonCircle2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSMaterialButtonCircle2ActionPerformed(evt);
+            }
+        });
 
         rSMaterialButtonCircle3.setText(" ADD");
         rSMaterialButtonCircle3.addActionListener(new java.awt.event.ActionListener() {
@@ -438,7 +510,11 @@ public class ManageBooks extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle3ActionPerformed
         // TODO add your handling code here:
-        if(addBook()) JOptionPane.showMessageDialog(this, "Book added successfully");
+        if(addBook()) {
+            JOptionPane.showMessageDialog(this, "Book added successfully");
+            clearTable();
+            setBookDetails();
+        }
         else JOptionPane.showMessageDialog(this,"Book addition failed");
     }//GEN-LAST:event_rSMaterialButtonCircle3ActionPerformed
 
@@ -453,6 +529,26 @@ public class ManageBooks extends javax.swing.JFrame {
         txt_authorName.setText(model.getValueAt(rowNo,2).toString());
         txt_quantity.setText(model.getValueAt(rowNo, 3).toString());
     }//GEN-LAST:event_tbl_bookDetailsMouseClicked
+
+    private void rSMaterialButtonCircle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1ActionPerformed
+        // TODO add your handling code here:
+        if(updateBook()) {
+            JOptionPane.showMessageDialog(this, "Book updated successfully");
+            clearTable();
+            setBookDetails();
+        }
+        else JOptionPane.showMessageDialog(this,"Book updation failed");
+    }//GEN-LAST:event_rSMaterialButtonCircle1ActionPerformed
+
+    private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
+        // TODO add your handling code here:
+        if(deleteBook()) {
+            JOptionPane.showMessageDialog(this, "Book deleted successfully");
+            clearTable();
+            setBookDetails();
+        }
+        else JOptionPane.showMessageDialog(this,"Book deletion failed");
+    }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
 
     /**
      * @param args the command line arguments

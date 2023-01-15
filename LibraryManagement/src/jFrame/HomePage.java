@@ -297,6 +297,17 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel9MouseExited(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
@@ -768,6 +779,23 @@ public class HomePage extends javax.swing.JFrame {
         book.setVisible(true);
         dispose();
     }//GEN-LAST:event_jPanel8MouseClicked
+
+    private void jPanel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseEntered
+        // TODO add your handling code here:
+        jPanel9.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel9MouseEntered
+
+    private void jPanel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseExited
+        // TODO add your handling code here:
+        jPanel9.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel9MouseExited
+
+    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+        // TODO add your handling code here:
+        ReturnBook book = new ReturnBook();
+        book.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel9MouseClicked
 
     /**
      * @param args the command line arguments

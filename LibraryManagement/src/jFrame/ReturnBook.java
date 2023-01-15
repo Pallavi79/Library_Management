@@ -20,6 +20,8 @@ public class ReturnBook extends javax.swing.JFrame {
         initComponents();
     }
     
+    
+    //GET ISSUE DETAILS
     public void getIssueBookDetails(){
         int bookId = Integer.parseInt(txt_bookId.getText());
         int studentId = Integer.parseInt(txt_studentId.getText());
@@ -57,28 +59,57 @@ public class ReturnBook extends javax.swing.JFrame {
     }
     
     
+    //RETURN BOOK
+    public boolean returnBook(){
+        boolean returned=false;
+        int bookId = Integer.parseInt(txt_bookId.getText());
+        int studentId = Integer.parseInt(txt_studentId.getText());
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            String sql = "update issue_book_details set status = ? where student_id = ? and book_id = ? and status = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1,"returned");
+            pst.setInt(2,studentId);
+            pst.setInt(3,bookId);
+            pst.setString(4,"pending");
+            
+            int rowCount = pst.executeUpdate();
+            
+            if(rowCount>0){
+                returned=true;
+            }
+            
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        
+        
+        return returned;
+    }
+    
+    
 
     //UPDATE BOOK COUNT
-//    public void updateBookCount(){
-//        int bookId = Integer.parseInt(txt_bookId.getText());
-//        
-//        try{
-//            Connection con = DBConnection.getConnection();
-//            
-//            String sql = " update book_details set quantity = quantity-1 where book_id = ?";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            pst.setInt(1,bookId);
-//            
-//            int rowCount = pst.executeUpdate();
-//            
-//            if(rowCount>0){
-//                int initialQuantity = Integer.parseInt(lbl_issueDate.getText());
-//                lbl_issueDate.setText(Integer.toString(initialQuantity-1));
-//            }
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public void updateBookCount(){
+        int bookId = Integer.parseInt(txt_bookId.getText());
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            
+            String sql = " update book_details set quantity = quantity+1 where book_id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1,bookId);
+            
+            int rowCount = pst.executeUpdate();
+            
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     
     
@@ -304,7 +335,7 @@ public class ReturnBook extends javax.swing.JFrame {
                     .addComponent(lbl_quantity1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_dueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_bookError, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(141, 141, 141))
         );
@@ -423,8 +454,11 @@ public class ReturnBook extends javax.swing.JFrame {
         );
         panelMainLayout.setVerticalGroup(
             panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bookPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelMainLayout.createSequentialGroup()
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bookPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -440,11 +474,10 @@ public class ReturnBook extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(977, 892));
+        setSize(new java.awt.Dimension(977, 783));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -475,6 +508,13 @@ public class ReturnBook extends javax.swing.JFrame {
 
     private void rSMaterialButtonCircle2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2ActionPerformed
         // TODO add your handling code here:
+        
+        if(returnBook()){
+            JOptionPane.showMessageDialog(this,"Book returned successfully");
+            updateBookCount();
+        }else{
+            JOptionPane.showMessageDialog(this,"Book return failed");
+        }
     }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked

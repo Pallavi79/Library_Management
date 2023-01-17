@@ -187,6 +187,11 @@ public class LoginPage extends javax.swing.JFrame {
                 rSMaterialButtonCircle1FocusLost(evt);
             }
         });
+        rSMaterialButtonCircle1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSMaterialButtonCircle1MouseClicked(evt);
+            }
+        });
         rSMaterialButtonCircle1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rSMaterialButtonCircle1ActionPerformed(evt);
@@ -305,6 +310,14 @@ public class LoginPage extends javax.swing.JFrame {
             logIn();
         }
     }//GEN-LAST:event_rSMaterialButtonCircle2ActionPerformed
+
+    private void rSMaterialButtonCircle1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle1MouseClicked
+        // TODO add your handling code here:
+        
+        SignUpPage signUp = new SignUpPage();
+        signUp.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rSMaterialButtonCircle1MouseClicked
 
     /**
      * @param args the command line arguments

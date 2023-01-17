@@ -5,6 +5,8 @@
 package jFrame;
 
 import java.awt.Color;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,8 +23,107 @@ public class HomePage extends javax.swing.JFrame {
     
     public HomePage() {
         initComponents();
+        setStudentDetails();
+        setBookDetails();
+        setDataToCards();
     }
 
+    
+    //SHOW STUDENT DETAILS IN THE TABLE
+    DefaultTableModel model;
+    public void setStudentDetails(){
+        
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            Statement st = con.createStatement(); 
+            ResultSet rs = st.executeQuery("select * from student_details");
+            
+            while(rs.next()){
+                String studentId = rs.getString("student_id");
+                String studentName = rs.getString( "name");
+                String course = rs.getString("course");
+                String branch = rs.getString("branch");
+                
+                Object[] obj = {studentId,studentName,course,branch};
+                
+                model = (DefaultTableModel) tbl_studentDetails.getModel();
+                model.addRow(obj);
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    
+    //SHOW BOOK DETAILS IN THE TABLE
+    public void setBookDetails(){
+        
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            Statement st = con.createStatement(); 
+            ResultSet rs = st.executeQuery("select * from book_details");
+            
+            while(rs.next()){
+                String bookId = rs.getString("book_id");
+                String bookName = rs.getString( "book_name");
+                String author = rs.getString("author");
+                int quantity = rs.getInt("quantity");
+                
+                Object[] obj = {bookId,bookName,author,quantity};
+                
+                model = (DefaultTableModel) tbl_bookDetails.getModel();
+                model.addRow(obj);
+                
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    //SET DATA TO CARDS
+    public void setDataToCards(){
+        Statement st = null;
+        ResultSet rs = null;
+        long l = System.currentTimeMillis();
+        Date todaysDate = new Date(l);
+        
+        try{
+            Connection con = DBConnection.getConnection();
+            st=con.createStatement();
+            rs=st.executeQuery("select * from book_details");
+            rs.last();
+            lbl_noOfBooks.setText(Integer.toString(rs.getRow()));
+            
+            rs=st.executeQuery("select * from student_details");
+            rs.last();
+            lbl_noOfStudents.setText(Integer.toString(rs.getRow()));
+            
+            rs=st.executeQuery("select * from issue_book_details where status = '"+"pending"+"'");
+            rs.last();
+            lbl_issuedBooks.setText(Integer.toString(rs.getRow()));
+            
+            rs=st.executeQuery("select * from issue_book_details where due_date< '"+todaysDate+"' and status = '"+"pending"+"'");
+            rs.last();
+            lbl_defaulterList.setText(Integer.toString(rs.getRow()));
+            
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,8 +140,6 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -61,21 +160,21 @@ public class HomePage extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        lbl_noOfBooks = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        lbl_noOfStudents = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        lbl_issuedBooks = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        lbl_defaulterList = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        rSTableMetro1 = new rojeru_san.complementos.RSTableMetro();
+        tbl_bookDetails = new rojeru_san.complementos.RSTableMetro();
         jScrollPane2 = new javax.swing.JScrollPane();
-        rSTableMetro2 = new rojeru_san.complementos.RSTableMetro();
+        tbl_studentDetails = new rojeru_san.complementos.RSTableMetro();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
 
@@ -121,6 +220,11 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
 
         jPanel3.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,30 +245,6 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_Library_26px_1.png"))); // NOI18N
-        jLabel5.setText("    Dashboard");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -332,6 +412,17 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel10.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel10MouseExited(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
@@ -356,6 +447,17 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel11.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel11MouseExited(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
@@ -380,6 +482,11 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel12.setBackground(new java.awt.Color(0, 102, 153));
+        jPanel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel12MouseClicked(evt);
+            }
+        });
 
         jLabel18.setBackground(new java.awt.Color(51, 51, 51));
         jLabel18.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -405,6 +512,17 @@ public class HomePage extends javax.swing.JFrame {
         );
 
         jPanel13.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel13MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel13MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel13MouseExited(evt);
+            }
+        });
 
         jLabel19.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
@@ -436,7 +554,6 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -453,9 +570,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(50, 50, 50)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -473,7 +588,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(240, Short.MAX_VALUE))
         );
 
         jPanel14.setBackground(new java.awt.Color(255, 255, 255));
@@ -481,10 +596,10 @@ public class HomePage extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(204, 204, 204));
         jPanel15.setBorder(javax.swing.BorderFactory.createMatteBorder(15, 1, 1, 1, new java.awt.Color(255, 102, 102)));
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_Book_Shelf_50px.png"))); // NOI18N
-        jLabel9.setText(" 10");
+        lbl_noOfBooks.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_noOfBooks.setForeground(new java.awt.Color(0, 0, 0));
+        lbl_noOfBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_Book_Shelf_50px.png"))); // NOI18N
+        lbl_noOfBooks.setText(" 10");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -492,14 +607,14 @@ public class HomePage extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_noOfBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel9)
+                .addComponent(lbl_noOfBooks)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -510,10 +625,10 @@ public class HomePage extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(204, 204, 204));
         jPanel16.setBorder(javax.swing.BorderFactory.createMatteBorder(15, 1, 1, 1, new java.awt.Color(0, 102, 153)));
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_People_50px.png"))); // NOI18N
-        jLabel11.setText(" 10");
+        lbl_noOfStudents.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_noOfStudents.setForeground(new java.awt.Color(0, 0, 0));
+        lbl_noOfStudents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_People_50px.png"))); // NOI18N
+        lbl_noOfStudents.setText(" 10");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -521,24 +636,24 @@ public class HomePage extends javax.swing.JFrame {
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_noOfStudents, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(jLabel11)
+                .addComponent(lbl_noOfStudents)
                 .addGap(20, 20, 20))
         );
 
         jPanel17.setBackground(new java.awt.Color(204, 204, 204));
         jPanel17.setBorder(javax.swing.BorderFactory.createMatteBorder(15, 1, 1, 1, new java.awt.Color(255, 102, 102)));
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_Sell_50px.png"))); // NOI18N
-        jLabel12.setText(" 10");
+        lbl_issuedBooks.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_issuedBooks.setForeground(new java.awt.Color(0, 0, 0));
+        lbl_issuedBooks.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_Sell_50px.png"))); // NOI18N
+        lbl_issuedBooks.setText(" 10");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -546,24 +661,24 @@ public class HomePage extends javax.swing.JFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_issuedBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_issuedBooks, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
         jPanel18.setBackground(new java.awt.Color(204, 204, 204));
         jPanel18.setBorder(javax.swing.BorderFactory.createMatteBorder(15, 1, 1, 1, new java.awt.Color(0, 102, 153)));
 
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_List_of_Thumbnails_50px.png"))); // NOI18N
-        jLabel13.setText(" 10");
+        lbl_defaulterList.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbl_defaulterList.setForeground(new java.awt.Color(0, 0, 0));
+        lbl_defaulterList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/adminIcons/adminIcons/icons8_List_of_Thumbnails_50px.png"))); // NOI18N
+        lbl_defaulterList.setText(" 10");
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -571,14 +686,14 @@ public class HomePage extends javax.swing.JFrame {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lbl_defaulterList, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                .addComponent(lbl_defaulterList, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
                 .addGap(21, 21, 21))
         );
 
@@ -594,37 +709,31 @@ public class HomePage extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(0, 0, 0));
         jLabel22.setText("Defaulter List");
 
-        rSTableMetro1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_bookDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "A", "X", "Y"},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Book Id", "Book Name", "Author Name", "Quantity"
             }
         ));
-        rSTableMetro1.setColorBackgoundHead(new java.awt.Color(0, 102, 153));
-        rSTableMetro1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        rSTableMetro1.setRowHeight(30);
-        jScrollPane1.setViewportView(rSTableMetro1);
+        tbl_bookDetails.setColorBackgoundHead(new java.awt.Color(0, 102, 153));
+        tbl_bookDetails.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tbl_bookDetails.setRowHeight(30);
+        jScrollPane1.setViewportView(tbl_bookDetails);
 
-        rSTableMetro2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_studentDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "A", "X", "Y"},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Student Id", "Name", "Course", "Branch"
             }
         ));
-        rSTableMetro2.setColorBackgoundHead(new java.awt.Color(0, 102, 153));
-        rSTableMetro2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        rSTableMetro2.setRowHeight(30);
-        jScrollPane2.setViewportView(rSTableMetro2);
+        tbl_studentDetails.setColorBackgoundHead(new java.awt.Color(0, 102, 153));
+        tbl_studentDetails.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        tbl_studentDetails.setRowHeight(30);
+        jScrollPane2.setViewportView(tbl_studentDetails);
 
         jLabel23.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(0, 0, 0));
@@ -797,6 +906,69 @@ public class HomePage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jPanel9MouseClicked
 
+    private void jPanel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseEntered
+        // TODO add your handling code here:
+        jPanel10.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel10MouseEntered
+
+    private void jPanel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseExited
+        // TODO add your handling code here:
+        jPanel10.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel10MouseExited
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        // TODO add your handling code here:
+        ViewRecords records = new ViewRecords();
+        records.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void jPanel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseEntered
+        // TODO add your handling code here:
+        jPanel11.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel11MouseEntered
+
+    private void jPanel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseExited
+        // TODO add your handling code here:
+        jPanel11.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel11MouseExited
+
+    private void jPanel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel11MouseClicked
+        // TODO add your handling code here:
+        IssueBookDetails books = new IssueBookDetails();
+        books.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel11MouseClicked
+
+    private void jPanel13MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseEntered
+        // TODO add your handling code here:
+        jPanel13.setBackground(mouseEnterColor);
+    }//GEN-LAST:event_jPanel13MouseEntered
+
+    private void jPanel13MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseExited
+        // TODO add your handling code here:
+        jPanel13.setBackground(mouseExitColor);
+    }//GEN-LAST:event_jPanel13MouseExited
+
+    private void jPanel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel13MouseClicked
+        // TODO add your handling code here:
+        DefaulterList list = new DefaulterList();
+        list.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel13MouseClicked
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void jPanel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel12MouseClicked
+        // TODO add your handling code here:
+        SignUpPage signUp = new SignUpPage();
+        signUp.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jPanel12MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -835,9 +1007,6 @@ public class HomePage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -852,11 +1021,9 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -869,7 +1036,6 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -877,7 +1043,11 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private rojeru_san.complementos.RSTableMetro rSTableMetro1;
-    private rojeru_san.complementos.RSTableMetro rSTableMetro2;
+    private javax.swing.JLabel lbl_defaulterList;
+    private javax.swing.JLabel lbl_issuedBooks;
+    private javax.swing.JLabel lbl_noOfBooks;
+    private javax.swing.JLabel lbl_noOfStudents;
+    private rojeru_san.complementos.RSTableMetro tbl_bookDetails;
+    private rojeru_san.complementos.RSTableMetro tbl_studentDetails;
     // End of variables declaration//GEN-END:variables
 }

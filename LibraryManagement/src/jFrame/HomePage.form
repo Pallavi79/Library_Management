@@ -137,7 +137,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jPanel4" max="32767" attributes="0"/>
                       <Component id="jPanel5" max="32767" attributes="0"/>
                       <Component id="jPanel6" max="32767" attributes="0"/>
                       <Component id="jPanel7" max="32767" attributes="0"/>
@@ -157,9 +156,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
@@ -177,7 +174,7 @@
                   <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="240" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -189,6 +186,9 @@
               <Color blue="66" green="66" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel3MouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -223,50 +223,6 @@
                   <Image iconType="3" name="/adminIcons/adminIcons/icons8_Home_26px_2.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="    Home Page"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel4">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="cc" green="cc" red="cc" type="rgb"/>
-            </Property>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="jLabel5" min="-2" pref="126" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel5" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel5">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/adminIcons/adminIcons/icons8_Library_26px_1.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="    Dashboard"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -514,6 +470,11 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel10MouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel10MouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel10MouseExited"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -558,6 +519,11 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel11MouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel11MouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel11MouseExited"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -602,6 +568,9 @@
               <Color blue="99" green="66" red="0" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel12MouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -649,6 +618,11 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel13MouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel13MouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel13MouseExited"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -796,7 +770,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" pref="105" max="-2" attributes="0"/>
+                      <Component id="lbl_noOfBooks" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -805,14 +779,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_noOfBooks" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="25" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel9">
+            <Component class="javax.swing.JLabel" name="lbl_noOfBooks">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="24" style="1"/>
@@ -858,7 +832,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="38" max="32767" attributes="0"/>
-                      <Component id="jLabel11" min="-2" pref="105" max="-2" attributes="0"/>
+                      <Component id="lbl_noOfStudents" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -867,14 +841,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="22" max="32767" attributes="0"/>
-                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                      <Component id="lbl_noOfStudents" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel11">
+            <Component class="javax.swing.JLabel" name="lbl_noOfStudents">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="24" style="1"/>
@@ -909,7 +883,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabel12" min="-2" pref="105" max="-2" attributes="0"/>
+                      <Component id="lbl_issuedBooks" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace pref="34" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -918,14 +892,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
-                      <Component id="jLabel12" min="-2" pref="58" max="-2" attributes="0"/>
+                      <Component id="lbl_issuedBooks" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace pref="17" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel12">
+            <Component class="javax.swing.JLabel" name="lbl_issuedBooks">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="24" style="1"/>
@@ -960,7 +934,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="jLabel13" min="-2" pref="105" max="-2" attributes="0"/>
+                      <Component id="lbl_defaulterList" min="-2" pref="105" max="-2" attributes="0"/>
                       <EmptySpace pref="26" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -969,14 +943,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel13" pref="65" max="32767" attributes="0"/>
+                      <Component id="lbl_defaulterList" pref="65" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel13">
+            <Component class="javax.swing.JLabel" name="lbl_defaulterList">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="24" style="1"/>
@@ -1032,34 +1006,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="rojeru_san.complementos.RSTableMetro" name="rSTableMetro1">
+            <Component class="rojeru_san.complementos.RSTableMetro" name="tbl_bookDetails">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Book Id" type="java.lang.Object">
-                      <Data value="1"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Book Name" type="java.lang.Object">
-                      <Data value="A"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Author Name" type="java.lang.Object">
-                      <Data value="X"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Quantity" type="java.lang.Object">
-                      <Data value="Y"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
+                  <Table columnCount="4" rowCount="0">
+                    <Column editable="true" title="Book Id" type="java.lang.Object"/>
+                    <Column editable="true" title="Book Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Author Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Quantity" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="colorBackgoundHead" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -1107,34 +1061,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="rojeru_san.complementos.RSTableMetro" name="rSTableMetro2">
+            <Component class="rojeru_san.complementos.RSTableMetro" name="tbl_studentDetails">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Student Id" type="java.lang.Object">
-                      <Data value="1"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Name" type="java.lang.Object">
-                      <Data value="A"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Course" type="java.lang.Object">
-                      <Data value="X"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
-                    <Column editable="true" title="Branch" type="java.lang.Object">
-                      <Data value="Y"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                      <Data value="null"/>
-                    </Column>
+                  <Table columnCount="4" rowCount="0">
+                    <Column editable="true" title="Student Id" type="java.lang.Object"/>
+                    <Column editable="true" title="Name" type="java.lang.Object"/>
+                    <Column editable="true" title="Course" type="java.lang.Object"/>
+                    <Column editable="true" title="Branch" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="colorBackgoundHead" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

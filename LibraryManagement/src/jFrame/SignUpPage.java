@@ -251,6 +251,11 @@ public class SignUpPage extends javax.swing.JFrame {
 
         rSMaterialButtonCircle2.setBackground(new java.awt.Color(51, 153, 0));
         rSMaterialButtonCircle2.setText(" Log In");
+        rSMaterialButtonCircle2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rSMaterialButtonCircle2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -369,6 +374,13 @@ public class SignUpPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(checkDuplicateUser()==true) JOptionPane.showMessageDialog(this, "user already exists");
     }//GEN-LAST:event_txt_usernameFocusLost
+
+    private void rSMaterialButtonCircle2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rSMaterialButtonCircle2MouseClicked
+        // TODO add your handling code here:
+        LoginPage logIn = new LoginPage();
+        logIn.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_rSMaterialButtonCircle2MouseClicked
 
     /**
      * @param args the command line arguments

@@ -23,10 +23,11 @@ public class ManageStudents extends javax.swing.JFrame {
         setStudentDetails();
     }
     
-    DefaultTableModel model;
+    
     
     
     //SHOW STUDENT DETAILS IN THE TABLE
+    DefaultTableModel model;
     public void setStudentDetails(){
         
         
